@@ -1,75 +1,41 @@
 using UnityEngine;
 
-public class IceMovement : MonoBehaviour
+public class IceMovementAddForce : MonoBehaviour
 {
-    public float acceleration = 5f;   // How quickly the character accelerates
-    public float maxSpeed = 10f;      // Maximum speed character can reach
-    public float friction = 2f;       // How quickly the character slows down when no input is given
-    public float directionChangeFriction = 4f; // Extra friction applied when changing direction
+    // Variables to adjust in the Unity Inspector
+    public float acceleration = 10f; // How quickly the character accelerates
+    public float maxSpeed = 5f;      // Maximum speed character can reach
+    public float linearDrag = 2f;    // Linear drag to simulate friction
 
     private Rigidbody2D rb;
-    private Vector2 velocity;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.drag = linearDrag; // Set the Rigidbody's linear drag to the value defined
     }
 
     void Update()
     {
         // Get input from the player
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        // Calculate the desired direction
-        Vector2 inputDirection = new Vector2(horizontalInput, verticalInput).normalized;
+        // Calculate the direction the player wants to move
+        Vector2 inputDirection = new Vector2(horizontal, vertical).normalized;
 
-        // Calculate friction and acceleration for the horizontal axis
-        if (Mathf.Abs(horizontalInput) > 0)
+        // Apply force in that direction if the speed is less than max speed
+        if (rb.velocity.magnitude < maxSpeed)
         {
-            float horizontalAngle = Vector2.Angle(new Vector2(velocity.x, 0), new Vector2(horizontalInput, 0));
-            float horizontalFrictionFactor = CalculateFrictionFactor(horizontalAngle);
-
-            // Apply friction to the horizontal velocity
-            velocity.x = Mathf.Lerp(velocity.x, velocity.x * Mathf.Cos(horizontalAngle * Mathf.Deg2Rad), horizontalFrictionFactor * Time.deltaTime);
-
-            // Accelerate on the horizontal axis
-            velocity.x += horizontalInput * acceleration * Time.deltaTime;
-        }
-        else
-        {
-            // Apply standard friction when no input is given on the horizontal axis
-            velocity.x = Mathf.Lerp(velocity.x, 0, friction * Time.deltaTime);
+            rb.AddForce(inputDirection * acceleration);
         }
 
-        // Calculate friction and acceleration for the vertical axis
-        if (Mathf.Abs(verticalInput) > 0)
+        // Optional: Clamp the velocity if it exceeds max speed (can happen in rare cases)
+        /*
+        if (rb.velocity.magnitude > maxSpeed)
         {
-            float verticalAngle = Vector2.Angle(new Vector2(0, velocity.y), new Vector2(0, verticalInput));
-            float verticalFrictionFactor = CalculateFrictionFactor(verticalAngle);
-
-            // Apply friction to the vertical velocity
-            velocity.y = Mathf.Lerp(velocity.y, velocity.y * Mathf.Cos(verticalAngle * Mathf.Deg2Rad), verticalFrictionFactor * Time.deltaTime);
-
-            // Accelerate on the vertical axis
-            velocity.y += verticalInput * acceleration * Time.deltaTime;
+            rb.velocity = rb.velocity.normalized * maxSpeed;
         }
-        else
-        {
-            // Apply standard friction when no input is given on the vertical axis
-            velocity.y = Mathf.Lerp(velocity.y, 0, friction * Time.deltaTime);
-        }
-
-        // Clamp the velocity to the maximum speed
-        velocity = Vector2.ClampMagnitude(velocity, maxSpeed);
-
-        // Update the Rigidbody's velocity
-        rb.velocity = velocity;
-    }
-
-    private float CalculateFrictionFactor(float angle)
-    {
-        float angleRadians = angle * Mathf.Deg2Rad;
-        return Mathf.Cos(angleRadians) + Mathf.Sin(angleRadians) * directionChangeFriction;
+        */
     }
 }
