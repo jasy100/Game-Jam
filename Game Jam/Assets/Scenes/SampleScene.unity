@@ -547,6 +547,7 @@ MonoBehaviour:
   acceleration: 5
   maxSpeed: 10
   friction: 2
+  directionChangeFriction: 4
 --- !u!1 &1554398498
 GameObject:
   m_ObjectHideFlags: 0
