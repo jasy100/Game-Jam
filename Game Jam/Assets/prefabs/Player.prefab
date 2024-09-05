@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1803226545394145319}
   - component: {fileID: 8144362481067513410}
   - component: {fileID: 3847820991748888229}
+  - component: {fileID: 1821123657529097824}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -122,6 +123,25 @@ MonoBehaviour:
   acceleration: 0.5
   maxSpeed: 10
   linearDrag: 0.5
+  BounceVelocityReduce: 0.7
+  BounceLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  index: 0
+--- !u!114 &1821123657529097824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4311902460506398212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326ce3d4fbc7ed8409e4d6b7b934188d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToPull: {fileID: 0}
+  pullForce: 1000
 --- !u!1 &7569643919824003631
 GameObject:
   m_ObjectHideFlags: 0
