@@ -1,3 +1,4 @@
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,13 +8,17 @@ public class Movement : MonoBehaviour
     [Header("Pull and Push")]
     [SerializeField] private LayerMask PullingMasks;
     [SerializeField] private float pullForce = 10f;
+    [SerializeField] private float pushForce = 10f;
     [SerializeField] private float playerPullForce = 5f;
     [SerializeField] private float MaxPullRadius = 4f;
     [SerializeField] private GameObject PointingDotPrefab;
+    [SerializeField] private GameObject enemy;
+    
+    [SerializeField] private float cooldown;
     private GameObject PointingDot;
 
     private bool IsPulling = false;
-
+    private bool alreadyPushed;
 
 
     [Header("Movement")]
@@ -123,9 +128,20 @@ public class Movement : MonoBehaviour
 
     public void Push()
     {
-        
+        if (!alreadyPushed)
+        {
+            Vector3 direction = enemy.transform.position - transform.position;
+            direction.Normalize();
+            enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce);
+            alreadyPushed = true;
+            Invoke(nameof(Reset), cooldown);
+        }
     }
 
+    public void Reset()
+    {
+        alreadyPushed = false;
+    }
     private Vector2 FindNearestPoint()
     {
         // Get all colliders within the search radius
