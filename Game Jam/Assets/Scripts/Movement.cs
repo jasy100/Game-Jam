@@ -14,9 +14,14 @@ public class Movement : MonoBehaviour
 
     private bool IsPulling = false;
     [SerializeField] private float pushForce = 10f;
-    [SerializeField] private float cooldown;
+    [SerializeField] private float PushCooldown;
     private bool alreadyPushed;
     [SerializeField] private GameObject enemy;
+
+    [Header("Dash")]
+    [SerializeField] private float DashCooldown;
+    [SerializeField] private float DashForce;
+    private bool alreadyDashed = false;
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 10f;
@@ -40,6 +45,8 @@ public class Movement : MonoBehaviour
 
     private Vector2 LastTrueVelocity;
 
+    private Vector2 inputDirection;
+
     public int GetPlayerIndex()
     {
         return index;
@@ -61,7 +68,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         LastTrueVelocity = rb.velocity;
-        Vector2 inputDirection = new Vector2(horizontal, vertical);
+        inputDirection = new Vector2(horizontal, vertical);
  
         if (rb.velocity.magnitude < maxSpeed)
         {
@@ -140,13 +147,29 @@ public class Movement : MonoBehaviour
             direction.Normalize();
             enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce,ForceMode2D.Impulse);
             alreadyPushed = true;
-            Invoke(nameof(Reset), cooldown);
+            Invoke(nameof(Reset), PushCooldown);
         }
     }
 
-    public void Reset()
+    private void Reset()
     {
         alreadyPushed = false;
+    }
+
+    public void Desh()
+    {
+        if (!alreadyDashed)
+        {
+            rb.AddForce(inputDirection.normalized * DashForce, ForceMode2D.Impulse);
+            
+            alreadyDashed = true;
+            Invoke(nameof(DashReset), DashCooldown);
+        }
+    }
+
+    private void DashReset()
+    {
+        alreadyDashed = false;
     }
 
     private Vector2 FindNearestPoint()

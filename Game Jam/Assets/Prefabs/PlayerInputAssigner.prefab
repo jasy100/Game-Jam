@@ -106,6 +106,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 14a3e3d2-cb0c-4413-8f4f-60fbec69f468
     m_ActionName: Controller/Push[/DualShock4GamepadHID/buttonSouth,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9020825407684470333}
+        m_TargetAssemblyTypeName: PlayerInputSetter, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7e1af4c0-3a5c-4c74-8c5d-a562dc401cc3
+    m_ActionName: Controller/Dash[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Controller

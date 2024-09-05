@@ -38,4 +38,9 @@ public class PlayerInputSetter : MonoBehaviour
     {
         movement.Push();
     }
+
+    public void OnDash()
+    {
+        movement.Desh();
+    }
 }
