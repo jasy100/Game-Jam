@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 688728639}
   - component: {fileID: 688728638}
   - component: {fileID: 688728637}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,13 +372,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ceb3e868ab88cf40ab76ac416ee4b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPull: {fileID: 970346586}
-  pullForce: 1000
-  playerPullForce: 300
+  PullingMasks:
+    serializedVersion: 2
+    m_Bits: 328
+  pullForce: 10
+  playerPullForce: 3
+  MaxPullRadius: 5
+  PointingDotPrefab: {fileID: 7545480094282553013, guid: 75f9f1cb04b2f974fb9e817885d41562, type: 3}
   acceleration: 2
   maxSpeed: 12
   linearDrag: 0.5
-  BounceVelocityReduce: 2
+  BounceVelocityReduce: 2.5
+  MaxOverallSpeed: 30
   BounceLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -464,7 +469,7 @@ Transform:
   m_GameObject: {fileID: 688728636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.55, y: 0, z: 0}
+  m_LocalPosition: {x: 16, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -485,7 +490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 52944141685604367, guid: a26b90521150de344b5c35bb092c0824, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 52944141685604367, guid: a26b90521150de344b5c35bb092c0824, type: 3}
       propertyPath: m_LocalPosition.z
@@ -519,9 +524,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 622255461482411443, guid: a26b90521150de344b5c35bb092c0824, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5301019807311677503, guid: a26b90521150de344b5c35bb092c0824, type: 3}
       propertyPath: m_Name
       value: spike
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301019807311677503, guid: a26b90521150de344b5c35bb092c0824, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301019807311677503, guid: a26b90521150de344b5c35bb092c0824, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -659,7 +676,7 @@ GameObject:
   - component: {fileID: 970346588}
   - component: {fileID: 970346587}
   - component: {fileID: 970346590}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -747,7 +764,7 @@ Transform:
   m_GameObject: {fileID: 970346586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -16, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -766,13 +783,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ceb3e868ab88cf40ab76ac416ee4b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPull: {fileID: 1439868432}
-  pullForce: 1000
-  playerPullForce: 300
+  PullingMasks:
+    serializedVersion: 2
+    m_Bits: 392
+  pullForce: 50
+  playerPullForce: 30
+  MaxPullRadius: 5
+  PointingDotPrefab: {fileID: 7545480094282553013, guid: b256dcdfeb76f2d4fa4852a64a81e37f, type: 3}
   acceleration: 2
   maxSpeed: 12
   linearDrag: 0.5
-  BounceVelocityReduce: 2
+  BounceVelocityReduce: 2.5
+  MaxOverallSpeed: 30
   BounceLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1037,11 +1059,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1439868432 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5301019807311677503, guid: a26b90521150de344b5c35bb092c0824, type: 3}
-  m_PrefabInstance: {fileID: 788496202}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1506520462
 GameObject:
   m_ObjectHideFlags: 0
