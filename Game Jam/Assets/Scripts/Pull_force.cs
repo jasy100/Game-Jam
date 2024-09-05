@@ -5,6 +5,8 @@ public class Pull_force : MonoBehaviour
     public GameObject objectToPull;
     public float pullForce = 10f;
     public float playerPullForce = 5f; // Adjust this to control the player's pull strength
+    private bool Pull = false;
+    private bool Push = false;
 
     void Update()
     {
@@ -23,4 +25,6 @@ public class Pull_force : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce * Time.deltaTime);
         }
     }
+
+
 }
