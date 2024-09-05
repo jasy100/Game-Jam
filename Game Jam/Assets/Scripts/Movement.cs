@@ -1,4 +1,3 @@
-using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,18 +7,16 @@ public class Movement : MonoBehaviour
     [Header("Pull and Push")]
     [SerializeField] private LayerMask PullingMasks;
     [SerializeField] private float pullForce = 10f;
-    [SerializeField] private float pushForce = 10f;
     [SerializeField] private float playerPullForce = 5f;
     [SerializeField] private float MaxPullRadius = 4f;
     [SerializeField] private GameObject PointingDotPrefab;
-    [SerializeField] private GameObject enemy;
-    
-    [SerializeField] private float cooldown;
     private GameObject PointingDot;
 
     private bool IsPulling = false;
+    [SerializeField] private float pushForce = 10f;
+    [SerializeField] private float cooldown;
     private bool alreadyPushed;
-
+    [SerializeField] private GameObject enemy;
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 10f;
@@ -28,6 +25,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private float BounceVelocityReduce = 0.7f;
     [SerializeField] private float MaxOverallSpeed = 20f;
     [SerializeField] private LayerMask BounceLayer;
+
+    [Header("Game Flow")]
+    [SerializeField] private GameObject GameFlow;
+    private GameFlow GameFlowScript;
+    [SerializeField] private LayerMask LayerHoles;
 
     private float horizontal = 0;
     private float vertical = 0;
@@ -52,7 +54,8 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.drag = linearDrag; 
+        rb.drag = linearDrag;
+        GameFlowScript = GameFlow.GetComponent<GameFlow>();
     }
 
     void Update()
@@ -81,8 +84,11 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (((1 << collision.gameObject.layer) & LayerHoles) != 0)
+        {
+            Death();
+        }
         
-        // Check if the object we collided with is on the bounce layer
         if (((1 << collision.gameObject.layer) & BounceLayer) != 0)
         {
             
@@ -109,10 +115,10 @@ public class Movement : MonoBehaviour
 
                 Collider2D colliderAtPoint = Physics2D.OverlapPoint(point);
 
-
-                if (colliderAtPoint != null)
+                if (colliderAtPoint != null && colliderAtPoint.TryGetComponent<Rigidbody2D>(out Rigidbody2D rbb))
                 {
-                    colliderAtPoint.GetComponent<Rigidbody2D>().AddForce(direction * pullForce);
+                    
+                    rbb.AddForce(direction * pullForce);
                 }
 
 
@@ -132,7 +138,7 @@ public class Movement : MonoBehaviour
         {
             Vector3 direction = enemy.transform.position - transform.position;
             direction.Normalize();
-            enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce);
+            enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce,ForceMode2D.Impulse);
             alreadyPushed = true;
             Invoke(nameof(Reset), cooldown);
         }
@@ -142,6 +148,7 @@ public class Movement : MonoBehaviour
     {
         alreadyPushed = false;
     }
+
     private Vector2 FindNearestPoint()
     {
         // Get all colliders within the search radius
@@ -197,5 +204,12 @@ public class Movement : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Death()
+    {
+        GameFlowScript.PlayerDied(index);
+        //PLACE FOR DEATH PARTILES
+        Destroy(gameObject);
     }
 }
