@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "Pull",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "867623eb-3c7e-4a49-846b-2f5c23fd52f6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Push",
@@ -104,7 +104,7 @@
                     "name": "",
                     "id": "98c8059d-39d1-4cba-8054-9f102633c4ae",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Pull",
