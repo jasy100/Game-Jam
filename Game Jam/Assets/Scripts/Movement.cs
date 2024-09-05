@@ -13,8 +13,10 @@ public class Movement : MonoBehaviour
     private GameObject PointingDot;
 
     private bool IsPulling = false;
-
-
+    [SerializeField] private float pushForce = 10f;
+    [SerializeField] private float cooldown;
+    private bool alreadyPushed;
+    [SerializeField] private GameObject enemy;
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 10f;
@@ -104,10 +106,10 @@ public class Movement : MonoBehaviour
 
                 Collider2D colliderAtPoint = Physics2D.OverlapPoint(point);
 
-
-                if (colliderAtPoint != null)
+                if (colliderAtPoint != null && colliderAtPoint.TryGetComponent<Rigidbody2D>(out Rigidbody2D rbb))
                 {
-                    colliderAtPoint.GetComponent<Rigidbody2D>().AddForce(direction * pullForce);
+                    
+                    rbb.AddForce(direction * pullForce);
                 }
 
 
@@ -123,7 +125,19 @@ public class Movement : MonoBehaviour
 
     public void Push()
     {
-        
+        if (!alreadyPushed)
+        {
+            Vector3 direction = enemy.transform.position - transform.position;
+            direction.Normalize();
+            enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce,ForceMode2D.Impulse);
+            alreadyPushed = true;
+            Invoke(nameof(Reset), cooldown);
+        }
+    }
+
+    public void Reset()
+    {
+        alreadyPushed = false;
     }
 
     private Vector2 FindNearestPoint()

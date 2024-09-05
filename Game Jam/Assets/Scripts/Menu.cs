@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-    
-    void Start()
+    public void Play()
     {
-        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    
-    void Update()
+    public void Quit()
     {
-        
+        Application.Quit();
     }
 }
