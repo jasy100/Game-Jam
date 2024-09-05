@@ -22,13 +22,13 @@ public class PlayerInputSetter : MonoBehaviour
         movement.SetInputVector(context.ReadValue<Vector2>());
     }
 
-    public void OnPull(CallbackContext context)
+    public void OnPull()
     {
-
+        movement.Pull();
     }
 
-    public void OnPush(CallbackContext context)
+    public void OnPush()
     {
-
+        movement.Push();
     }
 }
