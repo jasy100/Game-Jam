@@ -22,11 +22,12 @@ public class Barrel : MonoBehaviour
         {
             if((Vector2.Distance(transform.position, player.transform.position))<=radius)
             {
+
                 Debug.Log("hit");
                 Vector3 direction = player.transform.position - transform.position;
                 direction.Normalize();
                 player.GetComponent<Rigidbody2D>().AddForce(direction * pushForce, ForceMode2D.Impulse);
-                Destroy(this.gameObject);
+                this.gameObject.SetActive(false);
             }
         }
     }

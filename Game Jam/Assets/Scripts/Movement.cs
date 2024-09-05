@@ -18,6 +18,7 @@ public class Movement : MonoBehaviour
     private bool alreadyPushed;
     [SerializeField] private GameObject enemy;
     [SerializeField] private float enemyDistance;
+    public ParticleSystem lineParticleSystem;
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 10f;
@@ -124,7 +125,11 @@ public class Movement : MonoBehaviour
 
 
                 GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce);
+                lineParticleSystem.transform.rotation = Quaternion.LookRotation(direction); // Rotation to face the object
             }
+            
+            
+
         }
     }
 
