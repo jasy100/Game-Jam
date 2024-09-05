@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float cooldown;
     private bool alreadyPushed;
     [SerializeField] private GameObject enemy;
+    [SerializeField] private float enemyDistance;
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 10f;
@@ -67,7 +68,7 @@ public class Movement : MonoBehaviour
             rb.velocity = rb.velocity.normalized * MaxOverallSpeed;
         }
 
-        
+        enemyDistance = Vector2.Distance(transform.position, enemy.transform.position);
     }
 
     private void FixedUpdate()
@@ -127,11 +128,14 @@ public class Movement : MonoBehaviour
     {
         if (!alreadyPushed)
         {
-            Vector3 direction = enemy.transform.position - transform.position;
-            direction.Normalize();
-            enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce,ForceMode2D.Impulse);
-            alreadyPushed = true;
-            Invoke(nameof(Reset), cooldown);
+            if (enemyDistance <= 5)
+            {
+                Vector3 direction = enemy.transform.position - transform.position;
+                direction.Normalize();
+                enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce, ForceMode2D.Impulse);
+                alreadyPushed = true;
+                Invoke(nameof(Reset), cooldown);
+            }
         }
     }
 
