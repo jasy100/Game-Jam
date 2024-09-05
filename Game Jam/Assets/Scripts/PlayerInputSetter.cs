@@ -22,9 +22,16 @@ public class PlayerInputSetter : MonoBehaviour
         movement.SetInputVector(context.ReadValue<Vector2>());
     }
 
-    public void OnPull()
+    public void OnPull(CallbackContext context)
     {
-        movement.Pull();
+        if (context.performed) 
+        {
+            movement.SetPull(true);
+        }
+        else if (context.canceled)
+        {
+            movement.SetPull(false);
+        }  
     }
 
     public void OnPush()

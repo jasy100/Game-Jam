@@ -1,3 +1,4 @@
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -5,10 +6,19 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [Header("Pull and Push")]
-    public GameObject objectToPull;
-    public float pullForce = 10f;
-    public float playerPullForce = 5f; 
+    [SerializeField] private LayerMask PullingMasks;
+    [SerializeField] private float pullForce = 10f;
+    [SerializeField] private float pushForce = 10f;
+    [SerializeField] private float playerPullForce = 5f;
+    [SerializeField] private float MaxPullRadius = 4f;
+    [SerializeField] private GameObject PointingDotPrefab;
+    [SerializeField] private GameObject enemy;
+    
+    [SerializeField] private float cooldown;
+    private GameObject PointingDot;
 
+    private bool IsPulling = false;
+    private bool alreadyPushed;
 
 
     [Header("Movement")]
@@ -16,6 +26,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float linearDrag = 2f;
     [SerializeField] private float BounceVelocityReduce = 0.7f;
+    [SerializeField] private float MaxOverallSpeed = 20f;
     [SerializeField] private LayerMask BounceLayer;
 
     private float horizontal = 0;
@@ -53,6 +64,19 @@ public class Movement : MonoBehaviour
         {
             rb.AddForce(inputDirection * acceleration);
         }
+
+        if (rb.velocity.magnitude > MaxOverallSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * MaxOverallSpeed;
+        }
+
+        
+    }
+
+    private void FixedUpdate()
+    {
+        Pull();
+        DrawPoint();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -70,23 +94,108 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void Pull()
+    private void Pull()
     {
-        // Calculate the direction vector from the object to pull to this object
-        Vector3 direction = transform.position - objectToPull.transform.position;
+        if (IsPulling)
+        {
+            Vector2 point = FindNearestPoint();
+            if (point != Vector2.zero)
+            {
 
-        // Normalize the direction vector to get a unit vector
-        direction.Normalize();
+                Vector3 direction = transform.position - new Vector3(point.x, point.y, 0);
 
-        // Apply the force to the object to pull continuously
-        objectToPull.GetComponent<Rigidbody2D>().AddForce(direction * pullForce * Time.deltaTime);
 
-        // Apply the force to the player (assuming you have a Rigidbody2D component on the player)
-        GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce * Time.deltaTime);
+                direction.Normalize();
+
+                Collider2D colliderAtPoint = Physics2D.OverlapPoint(point);
+
+
+                if (colliderAtPoint != null)
+                {
+                    colliderAtPoint.GetComponent<Rigidbody2D>().AddForce(direction * pullForce);
+                }
+
+
+                GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce);
+            }
+        }
+    }
+
+    public void SetPull(bool pull)
+    {
+        IsPulling = pull;
     }
 
     public void Push()
     {
+        if (!alreadyPushed)
+        {
+            Vector3 direction = enemy.transform.position - transform.position;
+            direction.Normalize();
+            enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce);
+            alreadyPushed = true;
+            Invoke(nameof(Reset), cooldown);
+        }
+    }
 
+    public void Reset()
+    {
+        alreadyPushed = false;
+    }
+    private Vector2 FindNearestPoint()
+    {
+        // Get all colliders within the search radius
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, MaxPullRadius, PullingMasks);
+
+        Vector2 nearestPoint = new Vector2();
+        float nearestDistance = Mathf.Infinity;
+
+        // Iterate through all colliders to find the nearest one
+        foreach (Collider2D hitCollider in hitColliders)
+        {
+            Vector2 closestPoint = Physics2D.ClosestPoint(transform.position, hitCollider);
+            float distance = Vector2.Distance(transform.position, closestPoint);
+
+            // Check if this collider is closer than the previous nearest
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestPoint = closestPoint;
+            }
+        }
+        if (hitColliders.Length == 0)
+        {
+            return Vector2.zero;
+        }
+        else
+        {
+            return nearestPoint;
+        }
+    }
+
+    private void DrawPoint()
+    {
+        if (PointingDotPrefab != null)
+        {
+            Vector2 point = FindNearestPoint();
+            if (point != Vector2.zero)
+            {
+                if (PointingDot == null)
+                {
+                    PointingDot = GameObject.Instantiate(PointingDotPrefab, FindNearestPoint(), Quaternion.identity);
+                }
+                else
+                {
+                    PointingDot.transform.position = FindNearestPoint();
+                }
+            }
+            else
+            {
+                if (PointingDot != null)
+                {
+                    Destroy(PointingDot);
+                }
+            }
+        }
     }
 }
