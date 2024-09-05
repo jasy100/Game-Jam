@@ -74,6 +74,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f237000a-8f82-4c15-84b8-545a216463b4
     m_ActionName: Controller/Movement
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9020825407684470333}
+        m_TargetAssemblyTypeName: PlayerInputSetter, Assembly-CSharp
+        m_MethodName: OnPull
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 867623eb-3c7e-4a49-846b-2f5c23fd52f6
+    m_ActionName: Controller/Buttons
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9020825407684470333}
+        m_TargetAssemblyTypeName: PlayerInputSetter, Assembly-CSharp
+        m_MethodName: OnPush
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 14a3e3d2-cb0c-4413-8f4f-60fbec69f468
+    m_ActionName: Controller/Push[/DualShock4GamepadHID/buttonSouth,/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Controller

@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [Header("Pull and Push")]
+    public GameObject objectToPull;
+    public float pullForce = 10f;
+    public float playerPullForce = 5f; 
 
+
+
+    [Header("Movement")]
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float linearDrag = 2f;
@@ -46,7 +53,6 @@ public class Movement : MonoBehaviour
         {
             rb.AddForce(inputDirection * acceleration);
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -62,5 +68,25 @@ public class Movement : MonoBehaviour
             // Set the Rigidbody's velocity to the reflected vector to maintain the same speed
             rb.velocity = reflectedVelocity;
         }
+    }
+
+    public void Pull()
+    {
+        // Calculate the direction vector from the object to pull to this object
+        Vector3 direction = transform.position - objectToPull.transform.position;
+
+        // Normalize the direction vector to get a unit vector
+        direction.Normalize();
+
+        // Apply the force to the object to pull continuously
+        objectToPull.GetComponent<Rigidbody2D>().AddForce(direction * pullForce * Time.deltaTime);
+
+        // Apply the force to the player (assuming you have a Rigidbody2D component on the player)
+        GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce * Time.deltaTime);
+    }
+
+    public void Push()
+    {
+
     }
 }
