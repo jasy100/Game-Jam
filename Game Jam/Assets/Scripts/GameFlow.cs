@@ -31,6 +31,9 @@ public class GameFlow : MonoBehaviour
     private GameObject RoundSaver;
     private Saver saver;
 
+    [Header("Map")]
+    [SerializeField] private GameObject[] Maps;
+
     private int Player1_Score = 0;
     private int Player2_Score = 0;
 
