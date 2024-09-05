@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,6 +8,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float linearDrag = 2f;
+    [SerializeField] private float BounceVelocityReduce = 0.7f;
+    [SerializeField] private LayerMask BounceLayer;
 
     private float horizontal = 0;
     private float vertical = 0;
@@ -14,6 +17,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private int index = 0;
 
     private Rigidbody2D rb;
+
+    private Vector2 LastTrueVelocity;
 
     public int GetPlayerIndex()
     {
@@ -34,7 +39,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-
+        LastTrueVelocity = rb.velocity;
         Vector2 inputDirection = new Vector2(horizontal, vertical);
  
         if (rb.velocity.magnitude < maxSpeed)
@@ -42,5 +47,20 @@ public class Movement : MonoBehaviour
             rb.AddForce(inputDirection * acceleration);
         }
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        // Check if the object we collided with is on the bounce layer
+        if (((1 << collision.gameObject.layer) & BounceLayer) != 0)
+        {
+            
+            // Reflect the velocity vector based on the collision normal
+            Vector2 reflectedVelocity = Vector2.Reflect(LastTrueVelocity * BounceVelocityReduce, collision.GetContact(0).normal);
+            
+            // Set the Rigidbody's velocity to the reflected vector to maintain the same speed
+            rb.velocity = reflectedVelocity;
+        }
     }
 }
