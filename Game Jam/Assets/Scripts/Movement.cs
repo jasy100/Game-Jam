@@ -26,6 +26,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private float MaxOverallSpeed = 20f;
     [SerializeField] private LayerMask BounceLayer;
 
+    [Header("Game Flow")]
+    [SerializeField] private GameObject GameFlow;
+    private GameFlow GameFlowScript;
+    [SerializeField] private LayerMask LayerHoles;
+
     private float horizontal = 0;
     private float vertical = 0;
 
@@ -49,7 +54,8 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.drag = linearDrag; 
+        rb.drag = linearDrag;
+        GameFlowScript = GameFlow.GetComponent<GameFlow>();
     }
 
     void Update()
@@ -78,8 +84,11 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (((1 << collision.gameObject.layer) & LayerHoles) != 0)
+        {
+            Death();
+        }
         
-        // Check if the object we collided with is on the bounce layer
         if (((1 << collision.gameObject.layer) & BounceLayer) != 0)
         {
             
@@ -195,5 +204,12 @@ public class Movement : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Death()
+    {
+        GameFlowScript.PlayerDied(index);
+        //PLACE FOR DEATH PARTILES
+        Destroy(gameObject);
     }
 }
