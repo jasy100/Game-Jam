@@ -60,10 +60,24 @@ public class GameFlow : MonoBehaviour
                 Player2_Score = saver.Player2_score;
                 Player1scr.text = Player1_Score.ToString();
                 Player2scr.text = Player2_Score.ToString();
+
+                int R = Random.Range(0, Maps.Length - 1);
+                
+                while (R == saver.Previous_Map)
+                {
+                    Debug.Log("gg");
+                    R = Random.Range(0, Maps.Length - 1);
+                }
+                Maps[R].SetActive(true);
+                saver.Previous_Map = R;
             }
             else
             {
-                saver.GameOnGoing = true; 
+                
+                saver.GameOnGoing = true;
+                int R = Random.Range(0, Maps.Length - 1);
+                Maps[R].SetActive(true);
+                saver.Previous_Map = R;
             }
         }
     }

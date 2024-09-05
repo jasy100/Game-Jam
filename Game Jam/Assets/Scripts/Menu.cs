@@ -51,10 +51,12 @@ public class Menu : MonoBehaviour
     public void QuitToMenu()
     {
         SceneManager.LoadScene(0);
+        Destroy(GameObject.FindWithTag("Saver"));
     }
 
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Destroy(GameObject.FindWithTag("Saver"));
     }
 }

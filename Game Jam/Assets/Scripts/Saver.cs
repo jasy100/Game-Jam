@@ -7,7 +7,7 @@ public class Saver : MonoBehaviour
     public bool GameOnGoing = false;
     public int Player1_score = 0;
     public int Player2_score = 0;
-    public int Previous_Map = 0;
+    public int Previous_Map = -1;
 
     public static Saver Instance;
     private void Awake()
