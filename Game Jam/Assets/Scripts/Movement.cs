@@ -18,8 +18,8 @@ public class Movement : MonoBehaviour
     private bool alreadyPushed;
     [SerializeField] private GameObject enemy;
     [SerializeField] private float enemyDistance;
-    public ParticleSystem mag;
-    [SerializeField] private bool partActive=false;
+    [SerializeField] private ParticleSystem mag;
+    private bool partActive = false;
 
     
 
@@ -167,11 +167,11 @@ public class Movement : MonoBehaviour
 
             if (enemyDistance <= 5)
             {
-                Vector3 direction = enemy.transform.position - transform.position;
-                direction.Normalize();
-                enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce, ForceMode2D.Impulse);
+                Vector3 pushDirection = enemy.transform.position - transform.position;
+                pushDirection.Normalize();
+                enemy.GetComponent<Rigidbody2D>().AddForce(pushDirection * pushForce, ForceMode2D.Impulse);
                 alreadyPushed = true;
-                Invoke(nameof(Reset), cooldown);
+                Invoke(nameof(Reset), PushCooldown);
             }
 
         }
