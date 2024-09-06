@@ -1251,7 +1251,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fb5e29e22908a84dafad404f7f1e2d6, type: 3}
-
+<<<<<<< HEAD
 --- !u!1 &276371067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,7 +1421,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1045401952875545495, guid: 08cb0789ed18eb6419113884d1578891, type: 3}
   m_PrefabInstance: {fileID: 318421022}
   m_PrefabAsset: {fileID: 0}
-
+>>>>>>> de38668b2a4ff5dba2444b2f50ff384017a1cae9
 --- !u!1 &325200550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,13 +2658,13 @@ MonoBehaviour:
   PushCooldown: 1
   enemy: {fileID: 970346586}
   enemyDistance: 0
-
+<<<<<<< HEAD
   mag: {fileID: 0}
   animator: {fileID: 1680296374}
-
+=======
   mag: {fileID: 971393718}
   pushPart: {fileID: 360973396}
-
+>>>>>>> de38668b2a4ff5dba2444b2f50ff384017a1cae9
   DashCooldown: 0
   DashForce: 0
   acceleration: 2
@@ -2720,12 +2720,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-
+<<<<<<< HEAD
   - {fileID: 1680296373}
-
+=======
   - {fileID: 1821091019}
   - {fileID: 1506520463}
-
+>>>>>>> de38668b2a4ff5dba2444b2f50ff384017a1cae9
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!58 &688728641
@@ -3033,8 +3033,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8704243265682325465, guid: 69464cceecc8a0342b7d33596f6357f4, type: 3}
   m_PrefabInstance: {fileID: 1812339336}
   m_PrefabAsset: {fileID: 0}
-
-
+<<<<<<< HEAD
+=======
 --- !u!1 &801032541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3301,7 +3301,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2726926294579486980, guid: 8fb5e29e22908a84dafad404f7f1e2d6, type: 3}
   m_PrefabInstance: {fileID: 839749559}
   m_PrefabAsset: {fileID: 0}
-
+>>>>>>> de38668b2a4ff5dba2444b2f50ff384017a1cae9
 --- !u!4 &887348363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1045401952875545495, guid: 08cb0789ed18eb6419113884d1578891, type: 3}
@@ -3612,11 +3612,11 @@ MonoBehaviour:
   enemy: {fileID: 688728636}
   enemyDistance: 0
   mag: {fileID: 1910146788}
-
+<<<<<<< HEAD
   animator: {fileID: 276371069}
-
+=======
   pushPart: {fileID: 1781451863}
-
+>>>>>>> de38668b2a4ff5dba2444b2f50ff384017a1cae9
   DashCooldown: 1
   DashForce: 30
   acceleration: 2
@@ -4891,8 +4891,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5134059800153272571, guid: b68ad4c8c29729342be5ee7ba053628d, type: 3}
   m_PrefabInstance: {fileID: 251538857}
   m_PrefabAsset: {fileID: 0}
-
-
+<<<<<<< HEAD
+=======
 --- !u!4 &1446058324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2726926294579486980, guid: 8fb5e29e22908a84dafad404f7f1e2d6, type: 3}
@@ -4987,7 +4987,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1582448127547275596, guid: fbca41fad254a4d449a744b5571f115d, type: 3}
   m_PrefabInstance: {fileID: 1353067392}
   m_PrefabAsset: {fileID: 0}
-
+>>>>>>> de38668b2a4ff5dba2444b2f50ff384017a1cae9
 --- !u!1 &1554398498
 GameObject:
   m_ObjectHideFlags: 0
