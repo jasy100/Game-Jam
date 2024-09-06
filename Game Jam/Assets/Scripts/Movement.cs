@@ -17,6 +17,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private float PushCooldown;
     private bool alreadyPushed;
     [SerializeField] private GameObject enemy;
+    [SerializeField] private float enemyDistance;
+    public ParticleSystem mag;
+    [SerializeField] private bool partActive=false;
+
+    
 
     [Header("Dash")]
     [SerializeField] private float DashCooldown;
@@ -79,7 +84,7 @@ public class Movement : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * MaxOverallSpeed;
         }
-
+        enemyDistance = Vector2.Distance(transform.position, enemy.transform.position);
         
     }
 
@@ -111,6 +116,7 @@ public class Movement : MonoBehaviour
     {
         if (IsPulling)
         {
+            
             Vector2 point = FindNearestPoint();
             if (point != Vector2.zero)
             {
@@ -127,11 +133,20 @@ public class Movement : MonoBehaviour
                     
                     rbb.AddForce(direction * pullForce);
                 }
+                Vector2 partDir = new Vector3(point.x, point.y) - transform.position;
+                direction.Normalize();
 
 
                 GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce);
+                mag.transform.rotation = Quaternion.LookRotation(partDir);
+
             }
+            
+
         }
+       
+   
+
     }
 
     public void SetPull(bool pull)
@@ -143,11 +158,22 @@ public class Movement : MonoBehaviour
     {
         if (!alreadyPushed)
         {
+
             Vector3 direction = enemy.transform.position - transform.position;
             direction.Normalize();
             enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce,ForceMode2D.Impulse);
             alreadyPushed = true;
             Invoke(nameof(Reset), PushCooldown);
+
+            if (enemyDistance <= 5)
+            {
+                Vector3 direction = enemy.transform.position - transform.position;
+                direction.Normalize();
+                enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce, ForceMode2D.Impulse);
+                alreadyPushed = true;
+                Invoke(nameof(Reset), cooldown);
+            }
+
         }
     }
 
