@@ -688,7 +688,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &234635819
 Transform:
   m_ObjectHideFlags: 0
@@ -1084,7 +1084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0010375977, y: 0.0037231445}
+  m_AnchoredPosition: {x: 0.0009765625, y: 0.0037231445}
   m_SizeDelta: {x: -1208, y: -680.5061}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &325200552
@@ -1896,8 +1896,10 @@ MonoBehaviour:
   MaxPullRadius: 5
   PointingDotPrefab: {fileID: 7545480094282553013, guid: 75f9f1cb04b2f974fb9e817885d41562, type: 3}
   pushForce: 10
-  cooldown: 1
+  PushCooldown: 0
   enemy: {fileID: 970346586}
+  DashCooldown: 0
+  DashForce: 0
   acceleration: 2
   maxSpeed: 12
   linearDrag: 0.5
@@ -2452,8 +2454,10 @@ MonoBehaviour:
   MaxPullRadius: 5
   PointingDotPrefab: {fileID: 7545480094282553013, guid: b256dcdfeb76f2d4fa4852a64a81e37f, type: 3}
   pushForce: 10
-  cooldown: 1
+  PushCooldown: 0
   enemy: {fileID: 688728636}
+  DashCooldown: 1
+  DashForce: 30
   acceleration: 2
   maxSpeed: 12
   linearDrag: 0.5
