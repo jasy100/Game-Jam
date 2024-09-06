@@ -21,7 +21,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private ParticleSystem mag;
     private bool partActive = false;
 
-    
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
 
     [Header("Dash")]
     [SerializeField] private float DashCooldown;
@@ -74,6 +75,17 @@ public class Movement : MonoBehaviour
     {
         LastTrueVelocity = rb.velocity;
         inputDirection = new Vector2(horizontal, vertical);
+
+        if (inputDirection.magnitude > 0.2f)
+        {
+            animator.SetBool("Running", true);
+            float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+        else if(animator.GetBool("Running"))
+        {
+            animator.SetBool("Running", false);
+        }
  
         if (rb.velocity.magnitude < maxSpeed)
         {
