@@ -84,7 +84,10 @@ public class Movement : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * MaxOverallSpeed;
         }
-        enemyDistance = Vector2.Distance(transform.position, enemy.transform.position);
+        if (enemy != null)
+        {
+            enemyDistance = Vector2.Distance(transform.position, enemy.transform.position);
+        }
         
     }
 
