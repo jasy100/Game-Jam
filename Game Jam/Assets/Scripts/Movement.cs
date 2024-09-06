@@ -21,13 +21,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private ParticleSystem mag;
     private bool partActive = false;
 
-
     [Header("Animation")]
     [SerializeField] private Animator animator;
-
-    [SerializeField] private ParticleSystem pushPart;
-    
-
 
     [Header("Dash")]
     [SerializeField] private float DashCooldown;
@@ -183,7 +178,6 @@ public class Movement : MonoBehaviour
             {
                 Vector3 pushDirection = enemy.transform.position - transform.position;
                 pushDirection.Normalize();
-                pushPart.Play();
                 enemy.GetComponent<Rigidbody2D>().AddForce(pushDirection * pushForce, ForceMode2D.Impulse);
                 alreadyPushed = true;
                 Invoke(nameof(Reset), PushCooldown);
