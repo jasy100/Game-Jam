@@ -159,12 +159,6 @@ public class Movement : MonoBehaviour
         if (!alreadyPushed)
         {
 
-            Vector3 direction = enemy.transform.position - transform.position;
-            direction.Normalize();
-            enemy.GetComponent<Rigidbody2D>().AddForce(direction * pushForce,ForceMode2D.Impulse);
-            alreadyPushed = true;
-            Invoke(nameof(Reset), PushCooldown);
-
             if (enemyDistance <= 5)
             {
                 Vector3 pushDirection = enemy.transform.position - transform.position;
