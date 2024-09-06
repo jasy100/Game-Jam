@@ -18,6 +18,9 @@ public class Movement : MonoBehaviour
     private bool alreadyPushed;
     [SerializeField] private GameObject enemy;
     [SerializeField] private float enemyDistance;
+    public ParticleSystem mag;
+    [SerializeField] private bool partActive=false;
+
     
 
     [Header("Movement")]
@@ -106,7 +109,7 @@ public class Movement : MonoBehaviour
     {
         if (IsPulling)
         {
-
+            
             Vector2 point = FindNearestPoint();
             if (point != Vector2.zero)
             {
@@ -123,16 +126,20 @@ public class Movement : MonoBehaviour
                     
                     rbb.AddForce(direction * pullForce);
                 }
+                Vector2 partDir = new Vector3(point.x, point.y) - transform.position;
+                direction.Normalize();
 
 
                 GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce);
-                
+                mag.transform.rotation = Quaternion.LookRotation(partDir);
+
             }
-            
             
 
         }
        
+   
+
     }
 
     public void SetPull(bool pull)
