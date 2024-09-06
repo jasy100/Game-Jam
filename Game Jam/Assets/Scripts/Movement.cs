@@ -159,10 +159,18 @@ public class Movement : MonoBehaviour
 
                 GetComponent<Rigidbody2D>().AddForce(-direction * playerPullForce);
                 mag.transform.rotation = Quaternion.LookRotation(partDir);
-
+                Debug.Log("sss");
+                if (!mag.isPlaying)
+                {
+                    mag.Play();
+                }
             }
             
 
+        }
+        else
+        {
+            mag.Stop();
         }
        
    
